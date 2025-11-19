@@ -1,4 +1,4 @@
-# 📘 README — Como transformar a base de conhecimento em uma POC de agente GenAI (RAG)
+# Como transformar a base de conhecimento em uma POC de agente GenAI (RAG)?
 
  Transformar o arquivo  `base_conhecimento_ifood_genai.csv` em uma **prova de conceito (POC)** de um agente interno utilizado para decisões de **reembolsos e cancelamentos**, similar ao que times internos podem desenvolver no iFood.
 
