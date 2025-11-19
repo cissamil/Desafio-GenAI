@@ -1,9 +1,13 @@
 # 📘 README — Como transformar a base de conhecimento em uma POC de agente GenAI (RAG)
 
-Este guia é **opcional** e serve para quem deseja transformar o arquivo  
-`base_conhecimento_ifood_genai.csv` em uma **prova de conceito (POC)** de um agente interno utilizado para decisões de **reembolsos e cancelamentos**, similar ao que times internos podem desenvolver no iFood.
+ Transformar o arquivo  `base_conhecimento_ifood_genai.csv` em uma **prova de conceito (POC)** de um agente interno utilizado para decisões de **reembolsos e cancelamentos**, similar ao que times internos podem desenvolver no iFood.
 
 A ideia não é construir um sistema completo, mas criar algo demonstrável para **portfólio, currículo ou entrevista técnica**.
+
+> Desenvolvi uma POC de agente interno para decisões de reembolso/cancelamento utilizando RAG e uma base de conhecimento simulada.  
+> A POC inclui fallback para baixa confiança e testes com cenários críticos (pedido já saiu para entrega, cancelamento por falha do restaurante, cobrança após cancelamento).  
+> O foco foi garantir consistência operacional e evitar respostas incorretas ou inventadas.
+
 
 ---
 
@@ -84,25 +88,6 @@ Use perguntas como:
 | “O cliente quer reembolso, mas o pedido já saiu para entrega. Ainda é permitido?” | Diferença entre desistência do cliente e falhas do restaurante/app |
 | “O restaurante cancelou por falta de ingrediente. O reembolso é automático?” | Deve identificar política de reembolso automático |
 | “O cliente foi cobrado após o cancelamento. O que fazer?” | Deve orientar validação do estorno e possível ticket |
-
----
-
-## 📝 6. Como apresentar essa POC no seu portfólio
-
-Modelo de texto:
-
-> Desenvolvi uma POC de agente interno para decisões de reembolso/cancelamento utilizando RAG e uma base de conhecimento simulada.  
-> A POC inclui fallback para baixa confiança e testes com cenários críticos (pedido já saiu para entrega, cancelamento por falha do restaurante, cobrança após cancelamento).  
-> O foco foi garantir consistência operacional e evitar respostas incorretas ou inventadas.
-
----
-
-## 🚀 7. Ideias de evolução (opcional)
-
-- Logs de confiança por resposta  
-- Classificação de decisão (financeiro / restaurante / entrega / fraude)  
-- Integração com APIs fictícias de pedidos ou estorno  
-- Classificação automática do tipo de caso  
 
 ---
 
