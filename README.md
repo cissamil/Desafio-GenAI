@@ -1,99 +1,76 @@
-# Como transformar a base de conhecimento em uma POC de agente GenAI (RAG)?
+# 🤖 POC: Agente GenAI para Decisões de Reembolso e Cancelamento (RAG No-Code)
 
- Transformar o arquivo  `base_conhecimento_ifood_genai.csv` em uma **prova de conceito (POC)** de um agente interno utilizado para decisões de **reembolsos e cancelamentos**, similar ao que times internos podem desenvolver no iFood.
+Transformar o arquivo `base_conhecimento_ifood_genai.csv` em uma **Prova de Conceito (POC)** de um agente interno utilizado para decisões de **reembolsos e cancelamentos**, simulando o desenvolvimento interno de times no iFood.
 
-A ideia não é construir um sistema completo, mas criar algo demonstrável para **portfólio, currículo ou entrevista técnica**.
+A ideia central é criar algo **demonstrável** e robusto para **portfólio, currículo ou entrevista técnica**.
 
-> Desenvolvi uma POC de agente interno para decisões de reembolso/cancelamento utilizando RAG e uma base de conhecimento simulada.  
-> A POC inclui fallback para baixa confiança e testes com cenários críticos (pedido já saiu para entrega, cancelamento por falha do restaurante, cobrança após cancelamento).  
-> O foco foi garantir consistência operacional e evitar respostas incorretas ou inventadas.
-
+> Desenvolvi uma POC de agente interno para decisões de reembolso/cancelamento utilizando RAG e uma base de conhecimento simulada.
+> A POC inclui fallback para baixa confiança e testes com cenários críticos (pedido já saiu para entrega, cancelamento por falha do restaurante, cobrança após cancelamento).
+> O foco foi garantir **consistência operacional** e evitar respostas incorretas ou inventadas (alucinações).
 
 ---
 
 ## 🎯 Objetivo da POC
 
-Criar um agente de IA capaz de:
+O projeto visa criar um agente de IA capaz de:
 
-1. **Consultar informações oficiais** (base de conhecimento)  
-2. **Responder perguntas operacionais** de forma consistente  
-3. **Evitar alucinações** (respostas inventadas)  
-4. Aplicar **fallback seguro** quando não há confiança na resposta
-
----
-
-## 🧰 O que você vai precisar
-
-Você pode escolher entre duas abordagens:
-
-| Tipo de POC | Ferramentas sugeridas |
-|-------------|-----------------------|
-| **Sem código (no-code)** | Flowise, Dify, ChatGPT Assistants, N8n, Zapier AI Actions |
-| **Com código** | Python + biblioteca de RAG (LangChain, LlamaIndex etc.) |
-
-Se seu foco é **portfólio rápido**, comece com **no-code**.
+1.  **Consultar informações oficiais** (base de conhecimento).
+2.  **Responder perguntas operacionais** de forma consistente.
+3.  **Evitar alucinações** (respostas inventadas).
+4.  Aplicar **fallback seguro** quando não há confiança na resposta.
 
 ---
 
-## 📥 1. Importe a base de conhecimento
+## 🛠️ Arquitetura e Implementação (Dify Workflow)
 
-Faça upload do CSV na ferramenta escolhida, na área onde ela aceita:
+A POC foi construída usando a abordagem **No-Code** através da ferramenta **Dify**, priorizando a velocidade de desenvolvimento e a clareza da arquitetura RAG.
 
-- **Knowledge Base**
-- **Documents**
-- **Files / Upload**
-- **Sources / Data Sources**
+### Fluxo RAG Implementado:
 
-Verifique se o conteúdo foi **indexado** corretamente.
+A lógica do agente é orquestrada através da seguinte sequência de blocos no Dify:
 
----
+$$\text{INICIAR (Pergunta)} \longrightarrow \text{RECUPERAÇÃO DE CONHECIMENTO (RAG)} \longrightarrow \text{LLM (GPT-4 + System Prompt)} \longrightarrow \text{RESPOSTA}$$
 
-## 🧩 2. Configure o propósito do agente
+### 🧩 Configuração do Agente (System Prompt e RAG)
 
-Sugestão de descrição:
+O comportamento do agente foi definido no **System Prompt** do bloco LLM (GPT-4), forçando a consulta à base de conhecimento e a aderência à política de segurança:
 
-> Você é um agente interno que auxilia colaboradores a decidirem sobre reembolsos e cancelamentos.  
-> Sempre consulte a base de conhecimento antes de responder.  
-> Se não houver confiança suficiente, sugira validação manual ou abertura de ticket interno, sem inventar informações.
-
----
-
-## 🔍 3. Ative o uso da base com busca semântica (RAG)
-
-Procure opções como:
-
-- **Use knowledge in answers**
-- **Ground responses on documents**
-- **Retrieval / Semantic Search / RAG**
-- **Search documents before answering**
-
-Ative e mantenha as configurações padrão.
+| Configuração | Detalhe |
+| :--- | :--- |
+| **Ferramenta Usada** | Dify (Abordagem No-Code) |
+| **Modelo LLM** | GPT-4 (ou similar) |
+| **Base de Conhecimento** | `base_conhecimento_ifood_genai.csv` (indexada via **Knowledge Retrieval**) |
+| **Prompt Central** | Força o uso exclusivo do contexto recuperado para garantir consistência. |
+| **Regra de Segurança (Fallback)** | Se não houver confiança, o agente não responde e orienta a abertura de ticket ou validação manual. |
 
 ---
 
-## ⚠️ 4. Configure o fallback de segurança
+## 🧰 O que você vai precisar (Ferramentas Sugeridas)
 
-Mensagem sugerida:
-
-> Não encontrei informações suficientes na base para responder com segurança. Sugiro abrir um ticket interno ou consultar a política oficial.
-
----
-
-## 🧪 5. Teste com cenários reais
-
-Use perguntas como:
-
-| Pergunta | O que observar |
-|---------|----------------|
-| “O cliente quer reembolso, mas o pedido já saiu para entrega. Ainda é permitido?” | Diferença entre desistência do cliente e falhas do restaurante/app |
-| “O restaurante cancelou por falta de ingrediente. O reembolso é automático?” | Deve identificar política de reembolso automático |
-| “O cliente foi cobrado após o cancelamento. O que fazer?” | Deve orientar validação do estorno e possível ticket |
+| Tipo de POC | Ferramentas Sugeridas |
+| :--- | :--- |
+| **Sem Código (No-Code)** | **Dify** (utilizado nesta POC), Flowise, ChatGPT Assistants, N8n, Zapier AI Actions |
+| **Com Código** | Python + biblioteca de RAG (LangChain, LlamaIndex etc.) |
 
 ---
 
-## 📄 Arquivo utilizado
+## 📄 Arquivo Base de Conhecimento
 
-`base_conhecimento_ifood_genai.csv`  
-*(Simulação para fins educacionais — não representa políticas oficiais do iFood)*
+O arquivo utilizado para indexação RAG é:
 
+* **`base_conhecimento_ifood_genai.csv`**
 
+*(Simulação para fins educacionais — não representa políticas oficiais do iFood).*
+
+---
+
+## 🧪 Testes com Cenários Críticos
+
+O agente foi validado com cenários operacionais complexos para garantir que o RAG e o Fallback de segurança funcionassem corretamente.
+
+| Pergunta (Teste) | Objetivo de Validação |
+| :--- | :--- |
+| “O cliente quer reembolso, mas o pedido já saiu para entrega. Ainda é permitido?” | Testar a **diferença** entre desistência do cliente e falhas do restaurante/app, consultando a base. |
+| “O restaurante cancelou por falta de ingrediente. O reembolso é automático?” | Validar a identificação da política de **reembolso automático** em caso de falha do restaurante. |
+| “O cliente foi cobrado após o cancelamento. O que fazer?” | Testar a orientação para validação do estorno e a ativação do **fallback** para abertura de ticket interno (se o estorno não for claro na base). |
+| **Teste Fallback:** (e.g., "Qual a melhor cor para o logo?") | Verificar se o **Fallback de Segurança** é ativado, sugerindo ticket em vez de inventar informações. |
