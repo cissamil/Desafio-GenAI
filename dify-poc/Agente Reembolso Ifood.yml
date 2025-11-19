@@ -1,0 +1,227 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: Agente Reembolso Ifood
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.7@9031bbf9b37d9f6341a20c78a8bd18d686afd3ff627545496c3557705419d084
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1763585376678-source-1763587012523-target
+      source: '1763585376678'
+      sourceHandle: source
+      target: '1763587012523'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1763587012523-source-llm-target
+      source: '1763587012523'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-answer-target
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: Iniciar
+        type: start
+        variables: []
+      height: 54
+      id: '1763585376678'
+      position:
+        x: 78.85428462564028
+        y: 157.1170241947893
+      positionAbsolute:
+        x: 78.85428462564028
+        y: 157.1170241947893
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        memory:
+          query_prompt_template: "{{#sys.query#}}\nContexto da política de reembolso\
+            \ recuperado: {{RECUPERAÇÃO DE CONHECIMENTO.knowledge}} \nPergunta do\
+            \ usuário: {{Iniciar.sys.query}}"
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 803ccdc5-4cb2-4a63-9914-a182b03388bf
+          role: system
+          text: 'Você é um Agente Interno Especialista, dedicado a auxiliar colaboradores
+            em decisões de reembolsos e cancelamentos de pedidos do iFood. Sua principal
+            função é garantir a consistência operacional e o alinhamento com as políticas
+            oficiais. INSTRUÇÕES DE SEGURANÇA E OPERAÇÃO: 1. SEMPRE consulte as informações
+            da Base de Conhecimento (RAG) que lhe serão fornecidas antes de formular
+            a resposta. 2. Use apenas o contexto recuperado para responder. Não invente
+            ou presuma informações. 3. Se a informação na Base de Conhecimento for
+            insuficiente, ambígua, ou se a confiança na busca for baixa, aplique o
+            FALLBACK de segurança. 4. Resposta de FALLBACK: "Não encontrei informações
+            suficientes e seguras na base para responder. Sugiro abrir um ticket interno
+            ou consultar a política oficial para validação manual." Mantenha as respostas
+            concisas, diretas e profissionais.'
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 92
+      id: llm
+      position:
+        x: 734.0923624745036
+        y: 145.659870451192
+      positionAbsolute:
+        x: 734.0923624745036
+        y: 145.659870451192
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm.text#}}'
+        selected: false
+        title: Resposta
+        type: answer
+        variables: []
+      height: 106
+      id: answer
+      position:
+        x: 1081.0003810259059
+        y: 135.14473214510437
+      positionAbsolute:
+        x: 1081.0003810259059
+        y: 135.14473214510437
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - 2+Pk0bCwQr/j/lrFtSEy30PZc+I2fJ5dtfaPDNw+hT1f3ZF1Ns4wuM7UCrWtKleU
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: text-embedding-3-large
+              embedding_provider_name: langgenius/openai/openai
+              vector_weight: 1
+            weight_type: customized
+        query_variable_selector:
+        - sys
+        - query
+        retrieval_mode: multiple
+        selected: false
+        title: Recuperação de conhecimento
+        type: knowledge-retrieval
+      height: 93
+      id: '1763587012523'
+      position:
+        x: 409.7716062359
+        y: 145.659870451192
+      positionAbsolute:
+        x: 409.7716062359
+        y: 145.659870451192
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 53.82862237700692
+      y: 155.52654791700783
+      zoom: 0.6993401978581374
+  rag_pipeline_variables: []
