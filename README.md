@@ -109,10 +109,6 @@ Modelo de texto:
 ## 📄 Arquivo utilizado
 
 `base_conhecimento_ifood_genai.csv`  
-*(Simulação para fins educacionais — não representa políticas oficiais do iFood.)*
+*(Simulação para fins educacionais — não representa políticas oficiais do iFood)*
 
----
 
-## ✔️ Pronto!
-
-Sua POC já está pronta para ser apresentada em entrevistas, no GitHub ou no portfólio.
